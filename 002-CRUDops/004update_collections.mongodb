@@ -1,0 +1,71 @@
+// select our database
+use('school');
+
+// create a function that adds a new field (alert) to a teacher
+// if it's notation is under 3.8 and delete that field
+// if exists and greater or equal to 3.8. Count the # of time it stay under 3.8
+// let's add a params
+function updateTeachers(criteria=3.8) {
+    // 1. get all documents in teachers collection
+    let documents = db.teachers.find({});
+
+    // Use the JS "forEach" method to loop 
+    // through the documents and update each one.
+    documents.forEach(function(document) {
+        // now we get a given document
+        if (document.notation >= criteria) {
+            // you can't use document.alert === null beacause it
+            // will always be true since alert field will be created
+            // automatically if not exists but with 'undefined' type
+            if (typeof document.alert !== 'undefined') {
+                // so update our current document
+                db.teachers.updateOne(
+                    // our filter
+                    { _id: document._id },
+                    // our update operations
+                    // here we want to delete the field alert
+                    // so, $unset ops allow to remove a field
+                    { $unset: { alert: "" } }
+                );
+            }
+        } else {
+            // if document.notation < 3.8
+            // update the teacher info
+            db.teachers.updateOne(
+                // filter
+                { _id: document._id },
+                // update ops
+                {
+                    // 1. create alert field if not exist and set the value
+                    // to 'attention !'
+                    // if alert already exist, it will just set it's value to
+                    // 'attention'
+                    $set: { alert: 'attention !' },
+
+                    // 2. increase the value of count
+                    // if count do not exist it will create it
+                    // and set its value to the increment
+                    $inc: { count: 1 }
+                }
+            );
+        }
+    });
+
+    // now let's get again all the documents after update ops
+    // let's return only firstName, notation, alert and count
+    documents = db.teachers.find(
+        {},
+        {
+            _id: 0,
+            teacherName: 1,
+            notation: 1,
+            alert: 1,
+            count: 1
+        }
+    );
+
+    // print them
+    print(documents);
+};
+
+updateTeachers(criteria=3.3);
