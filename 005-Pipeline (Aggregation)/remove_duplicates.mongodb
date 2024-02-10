@@ -1,0 +1,76 @@
+// select our db
+use('school');
+
+// create a function to remove duplicates
+// 1. for students collection
+function dropDuplicatesStudents() {
+    // first: aggregate students data in order to get all ids of repeated data
+    const documents = db.students.aggregate(
+        [
+            // stage 1: group by (firstName, lastName) and count
+            // the number of students in each group
+            // alsp, save the students ids in an array for each group
+            // note: below a stage (from 2nd level in the hierarchy), 
+            // access to a field is via '$my_field'
+            {
+                $group: {
+                    // so, each group will be identified by the couple (fn, ln)
+                    _id: { fn: '$firstName', ln: '$lastName' },
+                    // create the array that will contains the ids for a given group
+                    uniqueIds: { $addToSet: '$_id' },
+                    // count number of instances/students in a given group
+                    count: { $sum: 1 }
+                }
+            },
+            // stage 2: retrieve only groups with count > 1 
+            // (where there are duplicates)
+            {
+                $match: {
+                    count: { $gt: 1 }
+                }
+            }
+        ]
+    );
+
+    // using the aggregation result, update our students collection by
+    // removing duplicates
+    documents.forEach(function(document) {
+        // so here we have a given group
+        // remove the first element in uniqueIds array
+        document.uniqueIds.shift();
+
+        // now, the remaining ids are duplicates, so remove them
+        // from students collection
+        db.students.deleteMany({ _id: {$in: document.uniqueIds} });
+    });
+};
+
+// 2. let's do it for teachers collection
+function dropDuplicatesTeachers() {
+    const documents = db.teachers.aggregate(
+        [
+            {
+                $group: {
+                    _id: '$teacherName',
+                    uniqueIds: { $addToSet: '$_id' },
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $match: {
+                    count: { $gt: 1 }
+                }
+            }
+        ]
+    );
+
+    documents.forEach(function(document) {
+        document.uniqueIds.shift();
+        db.teachers.deleteMany({ _id: {$in: document.uniqueIds} });
+    });
+};
+
+
+// let's execute
+dropDuplicatesTeachers();
+
