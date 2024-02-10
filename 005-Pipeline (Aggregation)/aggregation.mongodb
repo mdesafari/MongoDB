@@ -1,0 +1,56 @@
+// select our db
+use('school');
+
+// make a left join from students and teachers
+// aim? get info on favorite teacher for each student
+function leftJoinStudentsTeachers() {
+    db.students.aggregate(
+        // your pipeline is a list of stages
+        [
+            // stage 1: lookup (left join)
+            {
+                $lookup: {
+                  from: 'teachers',  // we join students with teachers
+                  localField: 'favoriteTeacher',  // field from students to make the join
+                  foreignField: 'teacherName',  // field from teachers to make the join
+                  as: 'favoriteTeacherInfo'  // field that will contain the result of the join
+                }
+            },
+            // stage 2: return only lastName, favoriteTeacherInfo, favoriteTeacher fields
+            // note that stage (i) takes the output of stage (i - 1) and so on...
+            {
+                $project: {
+                    _id: false,
+                    lastName: true,
+                    favoriteTeacher: true,
+                    favoriteTeacherInfo: true
+                }
+            },
+            // stage 3: rename favoriteTeacher and favoriteTeacherInfo name with
+            // teacher and teacherInfo respectively
+            {
+                // yes, project can also be used to rename
+                $project: {
+                    lastName: true, // means I want to return it
+                    teacher: '$favoriteTeacher', // means I want to rename favoriteTeacher to teacher and return teacher
+                    teacherInfo: '$favoriteTeacherInfo'
+                }
+            },
+            // stage 4: in field teacherInfo, do not include _id (teacher id)
+            {
+                $project: {
+                    'teacherInfo._id': false // in fact, teacherInfo._id without '' will not work
+                }
+            },
+            // stage 5: store the final output (stage 4) into a new collection
+            // named: detailStudents in the current database (school)
+            {
+                $out: 'detailStudents'
+            }
+        ]
+    );
+};
+
+
+// let's execute this
+leftJoinStudentsTeachers();

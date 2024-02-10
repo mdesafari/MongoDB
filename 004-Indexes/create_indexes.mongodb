@@ -1,0 +1,53 @@
+// select our database
+use('school');
+
+// create a function that creates index on either students or teachers
+// table
+function createIndexOn(collection, indexDocument, indexName) {
+    if (collection === 'students') {
+        db.students.createIndex(
+            indexDocument,
+            indexName
+        );
+    } else {
+        db.teachers.createIndex(
+            indexDocument,
+            indexName
+        );
+    }
+};
+
+// let's create a function to create several indexes
+function executeCreateIndexOn() {
+    // on students collection
+    // 1. index on both (firstName, lastName)
+    createIndexOn(
+        collection='students',
+        indexDocument={
+            firstName: 1, // asc
+            lastName: 1  // asc
+        },
+        indexName={
+            name: 'indexStudentsName'
+        }
+    );
+
+    // 2. index on gpa
+    createIndexOn(
+        collection='students',
+        indexDocument={ gpa: 1 },
+        indexName={ name: 'indexStudentsGPA' }
+    );
+
+    // on teacher collection
+    // index on (teacherName, notation)
+    createIndexOn(
+        collection='teachers',
+        indexDocument={ teacherName: 1, notation: -1 },
+        indexName={ name: 'indexTeachersNameNotation' }
+    );
+};
+
+
+// let's execute it only one time
+executeCreateIndexOn();

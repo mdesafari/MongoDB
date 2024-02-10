@@ -1,0 +1,10 @@
+// select our database
+use('school');
+
+// show indexes
+function showIndexes(collection) {
+    print(db.getCollection(collection).getIndexes())
+};
+
+showIndexes(collection='teachers');
+

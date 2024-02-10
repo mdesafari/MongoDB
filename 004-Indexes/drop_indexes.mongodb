@@ -1,0 +1,17 @@
+// select our db
+use('school');
+
+// create a function that drops indexes
+function dropIndexes(collection, indexName) {
+    if (collection === 'students') {
+        db.students.dropIndex(indexName);
+    } else {
+        db.teachers.dropIndex(indexName);
+    }
+};
+
+// let's drop some indexes
+dropIndexes(
+    collection='students',
+    indexName='indexStudentsName'
+);
