@@ -1,0 +1,213 @@
+// data that will be used in this project
+const students = [
+    {
+        firstName: "Martin",
+        lastName: "Cortez",
+        age: 18,
+        admittedOn: new Date("2021-09-01"),
+        undergraduate: true,
+        gpa: 3.1,
+        favoriteTeacher: null
+    },
+    {
+        firstName: "Alice",
+        lastName: "Koltin",
+        age: 21,
+        admittedOn: new Date("2021-05-03"),
+        undergraduate: true,
+        gpa: 3.3,
+        favoriteTeacher: "Molina"
+    },
+    {
+        firstName: "Joseph",
+        lastName: "McCarty",
+        age: 25,
+        admittedOn: new Date("2022-09-01"),
+        undergraduate: true,
+        gpa: 2.4,
+        favoriteTeacher: "Abdel"
+    },
+    {
+        firstName: "Umar",
+        lastName: "Bill",
+        age: 24,
+        admittedOn: new Date("2020-12-01"),
+        undergraduate: false,
+        gpa: 3.8,
+        favoriteTeacher: "Abdel"
+    },
+    {
+        firstName: "Salif",
+        lastName: "Konrad",
+        age: 23,
+        admittedOn: new Date("2019-09-01"),
+        undergraduate: false,
+        gpa: 3.9,
+        favoriteTeacher: "McLaurin"
+    },
+    {
+        firstName: "Kumar",
+        lastName: "Admil",
+        age: 17,
+        admittedOn: new Date("2023-09-01"),
+        undergraduate: true,
+        gpa: 3.5,
+        favoriteTeacher: "Molina"
+    },
+    {
+        firstName: "Sonia",
+        lastName: "BelleDame",
+        age: 23,
+        admittedOn: new Date("2022-09-01"),
+        undergraduate: false,
+        gpa: 4.1,
+        favoriteTeacher: "Monalisa"
+    },
+    {
+        firstName: "Amanda",
+        lastName: "Konate",
+        age: 26,
+        admittedOn: new Date("2022-06-07"),
+        undergraduate: false,
+        gpa: 4.2,
+        favoriteTeacher: "Monalisa"
+    },
+    {
+        firstName: "Amanda",
+        lastName: "Konate",
+        age: 26,
+        admittedOn: new Date("2022-06-07"),
+        undergraduate: false,
+        gpa: 4.2,
+        favoriteTeacher: "McLaurin"
+    },
+    {
+        firstName: "Manon",
+        lastName: "Dolby",
+        age: 25,
+        admittedOn: new Date("2022-06-07"),
+        undergraduate: false,
+        gpa: 2.8,
+        favoriteTeacher: "Kumar"
+    },
+    {
+        firstName: "Edmon",
+        lastName: "Matt",
+        age: 21,
+        admittedOn: new Date("2021-06-07"),
+        undergraduate: true,
+        gpa: 4.0,
+        favoriteTeacher: "Kumar"
+    },
+    {
+        firstName: "Blaise",
+        lastName: "Botin",
+        age: 24,
+        admittedOn: new Date("2021-06-07"),
+        undergraduate: true,
+        gpa: 3.0,
+        favoriteTeacher: "Camara"
+    },
+    {
+        firstName: "Amaru",
+        lastName: "Singh",
+        age: 21,
+        admittedOn: new Date("2021-06-07"),
+        undergraduate: true,
+        gpa: 4.2,
+        favoriteTeacher: "Camara"
+    },
+    {
+        firstName: "Mario",
+        lastName: "Corleone",
+        age: 23,
+        admittedOn: new Date("2019-06-07"),
+        undergraduate: false,
+        gpa: 2.4,
+        favoriteTeacher: "Coldman"
+    },
+    {
+        firstName: "Kayt",
+        lastName: "Intello",
+        age: 24,
+        admittedOn: new Date("2022-04-01"),
+        undergraduate: false,
+        gpa: 3.8,
+        favoriteTeacher: "Sue"
+    }
+];
+
+const teachers = [
+    {
+        teacherName: "Sue",
+        subjects: ["Biology", "Mandarin", "History"],
+        teachingDay: {
+            firstSubject: "Monday",
+            secondSubject: "Wednesday",
+            thirdSubject: "Friday"
+        },
+        notation: 3.7
+    },
+    {
+        teacherName: "Colman",
+        subjects: ["Mathematics"],
+        teachingDay: {
+            firstSubject: "Tuesday"
+        },
+        notation: 3.0
+    },
+    {
+        teacherName: "Camara",
+        subjects: ["Physics", "Malinke"],
+        teachingDay: {
+            firstSubject: "Friday",
+            secondSubject: "Friday"
+        },
+        notation: 4.0
+    },
+    {
+        teacherName: "Kumar",
+        subjects: ["Mathematics", "Sport"],
+        teachingDay: {
+            firstSubject: "Thursday",
+            secondSubject: "Monday"
+        },
+        notation: 4.1
+    },
+    {
+        teacherName: "McLaurin",
+        subjects: ["Danse", "Video Game"],
+        teachingDay: {
+            firstSubject: "Thursday",
+            secondSubject: "Thursday"
+        },
+        notation: 4.2
+    },
+    {
+        teacherName: "Monalisa",
+        subjects: ["French", "Italian", "Art"],
+        teachingDay: {
+            firstSubject: "Thursday",
+            secondSubject: "Monday",
+            thirdSubject: "Tuesday"
+        },
+        notation: 3.7
+    },
+    {
+        teacherName: "Molina",
+        subjects: ["Self-defense"],
+        teachingDay: {
+            firstSubject: "Friday"
+        },
+        notation: 4.1
+    },
+    {
+        teacherName: "Abdel",
+        subjects: ["Chemistry", "Personal development"],
+        teachingDay: {
+            firstSubject: "Monday",
+            secondSubject: "Tuesday"
+        },
+        notation: 4.2
+    }
+];

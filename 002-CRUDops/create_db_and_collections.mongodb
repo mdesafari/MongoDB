@@ -1,0 +1,9 @@
+// create our database named: school
+use('school');
+
+// create our first collection named: students
+db.createCollection('students');
+
+// create our second collection named: teachers
+db.createCollection('teachers');
+
