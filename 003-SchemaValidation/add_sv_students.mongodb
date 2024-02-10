@@ -1,0 +1,49 @@
+// select our database
+use('school');
+
+// 1. add a schema validation to students
+// require: [firstName, lastName, age]
+// firstName: string, maxLength: 30 - lastName: string, maxLength: 30
+// age: min 16, max 200 - if undergraduate is specified: boolean
+// its a recipe and just follow the structure as below
+db.runCommand(
+    {
+        collMod: 'students',  // our collection to which to create sv
+        validator: {
+            $jsonSchema: {
+                bsonType: 'object',
+                title: 'Schema validation for students collection',
+                // required field when inserting data into students
+                required: ['firstName', 'lastName', 'age'],
+                // define constraints on all the fields that need it
+                // whether they're required or not
+                properties: {
+                    firstName: {
+                        bsonType: 'string',
+                        maxLength: 30,
+                        description: 'firstName should be a string with max length of 30'
+                    },
+                    lastName: {
+                        bsonType: 'string',
+                        maxLength: 30,
+                        description: 'lastName should be a string with max length of 30'
+                    },
+                    age: {
+                        bsonType: 'int',
+                        minimum: 16,
+                        maximum: 200,
+                        description: 'age should be int btw 16 and 200'
+                    },
+                    // a field not required but if provided
+                    undergraduate: {
+                        bsonType: 'bool',
+                        description: 'undergraduate should be a boolean: true or false'
+                    }
+                }
+            }
+        },
+        validationLevel: 'strict',  // 'off', 'strict', 'moderate'
+        validationAction: 'error'  // 'error', 'warn', 'log'
+    }
+);
+

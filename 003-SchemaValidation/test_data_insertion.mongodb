@@ -1,0 +1,72 @@
+// select our database
+use('school');
+
+// create functions for different insertion test
+// 1. insert invalid data
+function insertInvalidData(choice) {
+    switch (choice) {
+        case 1: // some required field have been left blank
+            db.students.insertOne(
+                // document to be inserted
+                {
+                    firstName: 'Magma'
+                }
+            );
+            break;
+        case 2:  // age is not btw 16 and 200
+            db.students.insertOne(
+                {
+                    firstName: 'Magma',
+                    lastName: 'Junior',
+                    age: 14
+                }
+            );    
+            break;
+        case 3: // undergraduate is not a bool
+            db.students.insertOne(
+                {
+                    firstName: 'Magma',
+                    lastName: 'Junior',
+                    age: 21,
+                    undergraduate: 'chill man'
+                }
+            );
+            break;
+        default:  // firstName is not a string
+            db.students.insertOne(
+                {
+                    firstName: 200,
+                    lastName: 'Junior',
+                    age: 21,
+                    undergraduate: true
+                }
+            );
+            break;
+    }
+};
+
+
+// now, add valid data
+function insertValidData() {
+    db.students.insertOne(
+        {
+            firstName: 'Monica',
+            lastName: 'Junior',
+            age: 21,
+            undergraduate: true
+        }
+    );
+
+    db.students.insertOne(
+        {
+            firstName: 'Monica',
+            lastName: 'Junior',
+            age: 19
+        }
+    );
+};
+
+// let's test
+insertValidData();
+
+

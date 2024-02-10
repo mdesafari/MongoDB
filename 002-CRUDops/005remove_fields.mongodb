@@ -1,0 +1,14 @@
+// select our database
+use('school');
+
+// let's remove alert and count fields in teachers collection
+db.teachers.updateMany(
+    // filter
+    // if alert field exist
+    { $or: [
+        { alert: { $exists: true } },
+        { count: { $exists: true } }
+    ] },
+    // update ops
+    { $unset: { count: '', alert: '' } }
+);
