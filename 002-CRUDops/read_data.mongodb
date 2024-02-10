@@ -1,0 +1,55 @@
+// select our database
+use('school');
+
+// 1. create a function to read all data in `students` collection
+// add a params named limit
+function readStudents(limit=3) {
+    // let's store the returned docs in a js var
+    // let's say we do not want to return the _id field
+    // let's say we want also only the firstName and gpa
+    // let's say we want to limit the returned docs to a certain value
+    // let's say we want to sort by gpa in DESC order
+    const documents = db.students.find(
+        {},  // {} means all documents
+        {
+            _id: false,
+            firstName: true,
+            gpa: true
+        }
+    ).limit(limit).sort(
+        {
+            gpa: -1  // -1 for desc and 1 for asc
+        }
+    );  
+
+    // now, print all the documents
+    print(documents);
+};
+
+
+// 2. let's do the same for `teachers` collection
+function readTeachers(limit=3) {
+    // let's say we want to returns teachers with notation < 3.8
+    // let's store this in a variable
+    // say we want among teachers with notation < 3.8 those name
+    // in ['Monalisa', 'Sue']
+    // let's limit and return only teacherName and notation
+    const documents = db.teachers.find(
+        // this a filter
+        {
+            notation: { $lt: 3.8 },  // lt: less than and $means it is an operator
+            teacherName: { $in: ['Monalisa', 'Sue'] }
+        },
+        // this what we call: projection (or project)
+        {
+            _id: 0,
+            teacherName: 1,
+            notation: 1
+        }
+    ).limit(limit);
+
+    // print it
+    print(documents);
+};
+
+readTeachers(limit=3);
