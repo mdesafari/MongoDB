@@ -68,4 +68,43 @@ function updateTeachers(criteria=3.8) {
     print(documents);
 };
 
-updateTeachers(criteria=3.3);
+// create a function that delete the last teacher's subjects if
+// the notation is < 3.8 and number of subjects is > 2
+function updateTeacherSubjects() {
+    db.teachers.updateMany(
+        // filter: use an expression ($expr) to compare fields in 
+        // the same document with other values
+        {
+            // the expression ($expr) format is a little bit odd
+            // but with practice it will be easy for you
+            // in an $expr, to access the value of a field in a doc
+            // you have to use '$my_field'
+            $expr: {
+                $and: [
+                    // this means that notation < 3.8
+                    { $lt: ['$notation', 3.8] },
+                    // this means that size of subjects(array) is > 1
+                    { $gt: [ {$size: '$subjects'}, 1 ] }
+                ]
+            }
+        },
+        // update operations
+        {
+            // this allows to remove the last element in an array
+            $pop: { subjects: 1 }  // -1 for the first element
+        }
+    );
+};
+
+// create a function to add new subjects to "Sue" and "Monalisa"
+// the subject is 'Mechanics'
+function updateMonalisaSue() {
+    db.teachers.updateMany(
+        // filter
+        { teacherName: {$in: [ 'Monalisa', 'Sue' ]} },
+        // update ops
+        // it adds 'Mechanics' at the end of subjects array
+        { $push: { subjects: 'Mechanics' } } // equivalent to append in Python
+    );
+};
+
