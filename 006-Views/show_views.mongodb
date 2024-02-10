@@ -1,0 +1,14 @@
+// select our db
+use('school');
+
+// function to show view
+function showViews() {
+    // get all documents in a view (like in a collection)
+    const documents = db.studentsGPAgreaterEqual4p1.find({});
+
+    // print
+    print(documents);
+};
+
+showViews();
+

@@ -1,0 +1,31 @@
+// selecet our db
+use('school');
+
+// create a function that that builds a view
+// the view will be a left join on students with gpa >= 4.1
+// and teachers collection (as previously)
+function createViewOnStudents() {
+    db.createView(
+        // view name
+        'studentsGPAgreaterEqual4p1',
+        // collection on which to build the view
+        'students',
+        // pipeline (aggregation)
+        [
+            // stage 1: get students with gpa >= 4.1
+            { $match: { gpa: { $gte: 4.1 } } },
+            // stage 2: lookup (left join) with teachers collection
+            {
+                $lookup: {
+                  from: 'teachers',
+                  localField: 'favoriteTeacher',
+                  foreignField: 'teacherName',
+                  as: 'favoriteTeacherInfo'
+                }
+            }
+        ]
+    );
+};
+
+// let's execute it (only one time)
+createViewOnStudents();
